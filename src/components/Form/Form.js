@@ -1,135 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-import FileBase from 'react-file-base64';
 
 import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 
-import * as pdfjsLib from 'pdfjs-dist/webpack';
-import pdfjsWorker from "pdfjs-dist/build/pdf.worker.entry";
-
-
-import CloudUpload from '@material-ui/icons/CloudUpload';
-
-/*
-  Reference for pdf text extract:
-  https://qawithexperts.com/article/javascript/read-pdf-file-using-javascript/318
-
-*/
-
-
-const BASE64_MARKER = ';base64,';
-
-
-function ExtractText(setPDF) {
-
-  var input = document.getElementById("file-id");
-  var fReader = new FileReader();
-  fReader.readAsDataURL(input.files[0]);
-  //console.log(input.files[0]);
-  fReader.onloadend = function (event) {
-      convertDataURIToBinary(event.target.result, setPDF);
-  }
-}
-
-
-function convertDataURIToBinary(dataURI, setPDF) {
-
-  var base64Index = dataURI.indexOf(BASE64_MARKER) + BASE64_MARKER.length;
-  var base64 = dataURI.substring(base64Index);
-  var raw = window.atob(base64);
-  var rawLength = raw.length;
-  var array = new Uint8Array(new ArrayBuffer(rawLength));
-
-  for (var i = 0; i < rawLength; i++) {
-      array[i] = raw.charCodeAt(i);
-  }
-  pdfAsArray(array, setPDF)
-
-
-}
-
-function getPageText(pageNum, PDFDocumentInstance) {
-  
-  // Return a Promise that is solved once the text of the page is retrieven
-  return new Promise(function (resolve, reject) {
-      PDFDocumentInstance.getPage(pageNum).then(function (pdfPage) {
-          // The main trick to obtain the text of the PDF page, use the getTextContent method
-          pdfPage.getTextContent().then(function (textContent) {
-              var textItems = textContent.items;
-              var finalString = "";
-
-              // Concatenate the string of the item to the final string
-              for (var i = 0; i < textItems.length; i++) {
-                  var item = textItems[i];
-
-                  finalString += item.str + " ";
-              }
-
-              // this is the extracted text
-              //console.log(finalString);
-
-              // Solve promise with the text retrieven from the page
-              resolve(finalString);
-          });
-      });
-  });
-}
-
-function pdfAsArray(pdfAsArray, setPDF) {
-
-  //console.log(pdfAsArray)
-  pdfjsLib.getDocument(pdfAsArray).promise.then(function (pdf) {
-
-      var pdfDocument = pdf;
-      // Create an array that will contain our promises
-      var pagesPromises = [];
-
-
-      for (var i = 0; i < pdf._pdfInfo.numPages; i++) {
-          // Required to prevent that i is always the total of pages
-          (function (pageNumber) {
-              // Store the promise of getPageText that returns the text of a page
-              pagesPromises.push(getPageText(pageNumber, pdfDocument));
-          })(i + 1);
-      }
-      
-
-      
-      // Execute all the promises
-      Promise.all(pagesPromises).then(function (pagesText) {
-
-          //console.log(pagesText)
-          setPDF(pagesText);
-
-      });
-
-  }, function (reason) {
-      // PDF loading error
-      console.error(reason);
-  });
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // this form handles post creation and updates
 
 const Form = ({ currentId, setCurrentId }) => {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
   // state for post data
   const [postData, setPostData] = useState({ title: '', message: '', tags: '', selectedFile: '' });
@@ -147,39 +25,16 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const [pdf, setPDF] = useState();
 
-  const [sumtext, setSumText] = useState('');
-
   const [filename, setFilename] = useState('');
 
 
-
-  // extract text from pdf (from input tag) and store in pdf state
-  // async, done once handleSubmit is called
-  const doPDFSTUFF = async (setPDF) => {
-    console.log('hit')
-
-    var name = document.getElementById('file-id'); 
-
-    setFilename(name.files.item(0).name);
+  const makePost = async () => {
 
 
-    ExtractText(setPDF)
-
-  }
-
-
-
-  const makePost = async (text) => {
-
-
-    if (text == ''){
+    if (postData.message == ''){
       postData.message = 'Sorry! There was an error parsing text.'
     }
-    else {
-      postData.message = text
-    }
 
-    console.log(postData)
     
     if (currentId === 0) { // create
       dispatch(createPost({ ...postData, name: user?.result?.name }));
@@ -197,16 +52,7 @@ const Form = ({ currentId, setCurrentId }) => {
   // makes call to textminer NLP API
   const makeAPICall = async (text) => {
 
-    
-
-    let input = ""
-    
-    for (let i = 0; i < text.length; i++){
-      input += text[i]
-    }
-
-
-      makePost(input);
+      makePost(text);
   }
 
   
@@ -237,7 +83,7 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     // call API here
-    await makeAPICall(pdf)
+    await makeAPICall()
 
   };
 
@@ -270,60 +116,23 @@ const Form = ({ currentId, setCurrentId }) => {
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
       />
 
-
-
-
-
-      
-
-    {/*}
-      <input type="file" id="file-id" name="file_name" 
-        className={classes.fileInput}
-        onChange={() => doPDFSTUFF(setPDF)}
-        accept=".pdf"
-        
+      <TextField 
+          name="message" 
+          variant="outlined" 
+          label="Message" 
+          fullWidth 
+          value={postData.message}
+          onChange={(e) => setPostData({ ...postData, message: e.target.value })}
       />
-  */}
 
-
-      <label for="file-id" className="drop-container" style={{width: '80%'}}>
-        <span className="drop-title">
-
-
-          <Typography variant="h6">{filename !== '' ? <>{filename}</> : <>{'Upload Pdf'}</>}</Typography>
-          <CloudUpload/>
-
-
-
-          
-
-
-        </span>
-      </label>
-      <input id="file-id" type="file" accept=".pdf" onChange={() => doPDFSTUFF(setPDF)} style={{display: 'none'}}/>
-
-
-
-{/*
-      <input type="file" id="file-upload"  accept=".pdf" onChange={() => doPDFSTUFF(setPDF)}/>     
-*/}
-
-
-{/*
-      <label for="files" className="drop-container" style={{width: '85%'}}>
-          <span className="drop-title">
-            <Typography variant="h5">Upload Pdf</Typography>
-            <CloudUpload/>
-          </span>
-      </label>   
-      <input type="file" id="file-id"  accept=".pdf" onChange={() => doPDFSTUFF(setPDF)}/>     
-*/}
-
-
-
-
-       
-
+      <TextField 
+          name="tags" 
+          variant="outlined" 
+          label="Tags" 
+          fullWidth 
+          value={postData.tags}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+      />
 
       <Button 
         className={classes.buttonSubmit} 
