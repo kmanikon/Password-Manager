@@ -126,6 +126,7 @@ const Form = ({ currentId, setCurrentId }) => {
       />
 
       <TextField 
+          color="inherit"
           name="tags" 
           variant="outlined" 
           label="Tags" 
