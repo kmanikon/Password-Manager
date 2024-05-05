@@ -30,13 +30,14 @@ export default makeStyles((theme) => ({
         '& label.Mui-focused': {
             color: '#fff', // Change focused label color to white
         },
+        
         '& .MuiInput-underline:after': {
             borderBottomColor: 'rgba(255, 255, 255, 0.7)', // Change underline color to dark mode palette
         },
+        
         '& .MuiOutlinedInput-root': {
             '& fieldset': {
                 borderColor: 'rgba(255, 255, 255, 0.7)', // Change border color to dark mode palette
-                backgroundColor: 'rgb(33, 37, 39)',
             },
             '&:hover fieldset': {
                 borderColor: '#fff', // Change border color on hover to white
@@ -45,6 +46,7 @@ export default makeStyles((theme) => ({
                 borderColor: 'rgba(255, 255, 255, 0.7)', // Change focused border color to dark mode palette
             },
         },
+        
 
        
         

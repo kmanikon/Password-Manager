@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, Paper } from '@material-ui/core';
+import { TextField, Button, Typography, Paper, InputBase } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
 import useStyles from './styles';
@@ -114,6 +114,7 @@ const Form = ({ currentId, setCurrentId }) => {
         fullWidth 
         value={postData.title}
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
+        className={classes.input}
       />
 
       <TextField 
@@ -123,6 +124,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth 
           value={postData.message}
           onChange={(e) => setPostData({ ...postData, message: e.target.value })}
+          className={classes.input}
       />
 
       <TextField 
@@ -133,6 +135,7 @@ const Form = ({ currentId, setCurrentId }) => {
           fullWidth 
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
+          className={classes.input}
       />
 
       <Button 

@@ -24,4 +24,14 @@ export default makeStyles((theme) => ({
     marginBottom: 10,
     marginTop: 10
   },
+  input: {
+    "& .MuiInputBase-root": {
+      color: '#fff',
+      backgroundColor: 'rgb(33, 37, 39)',
+    },
+    "& .MuiInputLabel-root": {
+      color: '#fff',
+      backgroundColor: 'rgb(33, 37, 39)',
+    },
+  },
 }));
