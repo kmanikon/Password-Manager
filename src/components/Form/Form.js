@@ -1,11 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Button, Typography, Paper, InputBase } from '@material-ui/core';
+import { TextField, Button, Typography, Paper, Input, InputBase, FormControl, InputAdornment, FilledInput, InputLabel } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
+
+import { Add, Remove, Close }  from '@material-ui/icons';
 
 import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 
 // this form handles post creation and updates
+
+// primary: #F2733F (orange)
+// secondary: #3FBEF2 (azure)
+// tertiary: #B6E6FA (light blue)
+const inputColor = '#F2733F';
+const buttonColor = '#B6E6FA';
 
 const Form = ({ currentId, setCurrentId }) => {
 
@@ -83,8 +91,9 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     // call API here
-    await makeAPICall()
+    //await makeAPICall()
 
+    console.log(postData);
   };
 
 
@@ -105,57 +114,140 @@ const Form = ({ currentId, setCurrentId }) => {
 
 
       <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
+      {/*
       <Typography variant="h6">{currentId ? 'Editing' : 'Creating'} a Soundbyte</Typography>
+      */}
       
+      <div className={classes.inputContainer}>
+  
+
       <TextField 
         name="title" 
-        variant="outlined" 
-        label="Title" 
+        variant="filled" 
+        label="Website URL" 
+        //color="info"
         fullWidth 
         value={postData.title}
         onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         className={classes.input}
+        size="small"
+        //type="url"
+        InputProps={{
+          disableUnderline: true,
+          style: {
+            borderTopLeftRadius: "7px",
+            borderTopRightRadius: "7px",
+          },
+        }}
+        InputLabelProps={{
+          style: {
+            color: inputColor//'#F2733F'//'#F2613F'
+          }
+        }}
+        focused
       />
 
       <TextField 
           name="message" 
-          variant="outlined" 
-          label="Message" 
+          variant="filled" 
+          label="Username" 
           fullWidth 
           value={postData.message}
           onChange={(e) => setPostData({ ...postData, message: e.target.value })}
           className={classes.input}
+          size="small"
+          InputProps={{
+            disableUnderline: true,
+          }}
+          InputLabelProps={{
+            style: {
+              color: inputColor//'#F2733F'//'#F2613F'
+            }
+          }}
+          focused
       />
 
       <TextField 
           color="inherit"
           name="tags" 
-          variant="outlined" 
-          label="Tags" 
+          variant="filled" 
+          label="Password" 
           fullWidth 
+          type="password"
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
           className={classes.input}
+          size="small"
+          InputProps={{
+            disableUnderline: true,
+            style: {
+              borderBottomLeftRadius: "7px",
+              borderBottomRightRadius: "7px",
+              // #40375c
+            },
+          }}
+          InputLabelProps={{
+            style: {
+              color: inputColor//'#F2733F'//'#F2613F'
+            }
+          }}
+          focused
       />
 
-      <Button 
-        className={classes.buttonSubmit} 
-        variant="contained" 
-        color="primary" 
-        size="large" 
-        type="submit" 
-        fullWidth>
-          Submit
-      </Button>
+      </div>
 
-      <Button 
-        variant="contained" 
-        color="action" 
-        size="small" 
-        onClick={clear}
-        fullWidth>
-          Clear
-      </Button>
+
+  <Button
+    className={classes.buttonSubmit}
+    variant="contained"
+    size="large"
+    type="submit"
+    fullWidth
+    style={{
+      textTransform: 'none',
+      borderRadius: 5,
+      color: buttonColor,//'#63A6FF',
+      justifyContent: 'flex-start', // Changed to flex-start
+      marginTop: 10,
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', whiteSpace: 'nowrap', marginLeft: -10 }}>
+      <Add style={{ fontSize: 18, marginRight: 4 }} />
+
+      <div>
+        {currentId ? 'edit website' : 'add website'}
+      </div>
+    </div>
+  </Button>
+
+  <Button
+    className={classes.buttonSubmit}
+    variant="contained"
+    size="large"
+    onClick={clear}
+    fullWidth
+    style={{
+      textTransform: 'none',
+      borderRadius: 5,
+      color: buttonColor,//'#63A6FF',
+      marginTop: 0,
+      justifyContent: 'flex-start', // Changed to flex-end
+      minWidth: '100px',
+      textAlign: 'left',
+      marginBottom: 5
+    }}
+  >
+    <div style={{ display: 'flex', alignItems: 'center', whiteSpace: 'nowrap',  marginLeft: -10  }}>
+      <Close style={{ fontSize: 18, marginRight: 4 }} />
+
+      <div>
+        clear
+      </div>
+    </div>
+  </Button>
+
+
+        
 
       </form>
     </Paper>

@@ -62,9 +62,9 @@ export default makeStyles((theme) => ({
         },
         '& .MuiButton-root': {
             color: buttonTextColor,//'#FFF', // Change button text color to white
-            backgroundColor: textSecondary,//theme.palette.text.secondary,//'#344', // Change button background color to dark mode palette
+            backgroundColor: 'rgba(0, 0, 0, 0.12)',//textSecondary,//theme.palette.text.secondary,//'#344', // Change button background color to dark mode palette
             '&:hover': {
-                backgroundColor: buttonHover,//theme.palette.action.hover,//'rgba(255,255,255,0.5)', // Change button background color on hover
+                backgroundColor: 'rgba(0, 0, 0, 0.54)',//theme.palette.action.hover,//'rgba(255,255,255,0.5)', // Change button background color on hover
             },
         },
     },
