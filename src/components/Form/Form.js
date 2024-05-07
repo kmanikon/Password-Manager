@@ -102,7 +102,7 @@ const Form = ({ currentId, setCurrentId }) => {
     return (
       <Paper className={classes.paper}>
         <Typography variant="h6" align="center">
-          Please Sign In to Create Soundbytes.
+          Please Sign In to Manage Passwords.
         </Typography>
       </Paper>
     );
