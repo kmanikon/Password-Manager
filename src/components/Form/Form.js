@@ -128,8 +128,8 @@ const Form = ({ currentId, setCurrentId }) => {
   if (!user?.result?.name) {
     return (
       <Paper className={classes.paper}>
-        <Typography variant="h6" align="center">
-          Please Sign In to Manage Passwords.
+        <Typography variant="h6" align="center" style={{background: 'transparent'}}>
+          Please Sign In to Manage Passwords
         </Typography>
       </Paper>
     );

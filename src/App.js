@@ -22,14 +22,17 @@ import { render } from 'react-dom';
 const App = () => {
 
     return (
+        <>
+        <Navbar/>
         <Container maxWidth="lg">
-            <Navbar/>
+           
             <Routes>
                 <Route exact path="/home" element={<Home/>}/>
                 <Route path="/" element={<Auth/>}/>
                 <Route exact path="*" element={<Auth/>}/>
             </Routes>
         </Container>
+        </>
     )
 }
 
