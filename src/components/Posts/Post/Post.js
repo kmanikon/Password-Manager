@@ -30,22 +30,6 @@ const Post = ({ post, setCurrentId }) => {
       dispatch(deletePost(post._id));
     }
 
-    /*
-    const extractDomain = (url) => {
-      try {
-        const domain = new URL(url).hostname;
-        const parts = domain.split('.');
-        if (parts.length > 2) {
-          return parts[1].charAt(0).toUpperCase() + parts[1].slice(1); // Capitalize the second-level domain
-        } else {
-          return parts[0].charAt(0).toUpperCase() + parts[0].slice(1); // Capitalize the domain if it doesn't have subdomains
-        }
-      } catch (error) {
-        //console.error('Invalid URL:', error);
-        return url;
-      }
-    }
-    */
     const extractDomain = (url) => {
       try {
         let domain;
@@ -69,6 +53,23 @@ const Post = ({ post, setCurrentId }) => {
       }
     }
 
+    const formatURL = (url) => {
+      
+      // Check if the URL already starts with "https://" or "http://"
+      if (!/^https?:\/\//i.test(url)) {
+        // If not, prepend "https://"
+        url = 'https://' + url;
+      }
+      
+      // Check if the URL already ends with ".com"
+      if (!/\.com$/i.test(url)) {
+        // If not, append ".com"
+        url += '.com';
+      }
+      
+      return url;
+    }
+
     return (
 
       <Card className={classes.card} >
@@ -86,7 +87,7 @@ const Post = ({ post, setCurrentId }) => {
 
         <Typography className={classes.title} variant="h5" gutterBottom >
           <a 
-            href={post.title} 
+            href={formatURL(post.title)} 
             target="_blank" 
             className={classes.link} 
             onMouseEnter={(e) => e.target.style.textDecoration = 'underline'}
