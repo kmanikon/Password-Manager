@@ -59,6 +59,7 @@ export default makeStyles((theme) => ({
             color: buttonTextColor,//'#fff', // Change typography color to white for dark mode
             //fontWeight: 700,
             //fontSize: 22,
+            //background: 'rgba(0, 0, 0, 0.54)'
         },
         '& .MuiButton-root': {
             color: buttonTextColor,//'#FFF', // Change button text color to white

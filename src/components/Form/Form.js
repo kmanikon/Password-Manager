@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper, Input, InputBase, FormControl, InputAdornment, FilledInput, InputLabel } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
-
+import EditIcon from '@material-ui/icons/Edit';
 import { Add, Remove, Close, Visibility, VisibilityOff, IconButton }  from '@material-ui/icons';
 
 import useStyles from './styles';
@@ -47,12 +47,21 @@ const Form = ({ currentId, setCurrentId }) => {
       postData.message = 'Sorry! There was an error parsing text.'
     }
 
+    let newPost = postData;
+
+    /*
+    const domain = extractDomain(newPost.title);
+
+    if (domain){
+      newPost.title = domain;
+    }
+    */
     
     if (currentId === 0) { // create
-      dispatch(createPost({ ...postData, name: user?.result?.name }));
+      dispatch(createPost({ ...newPost, name: user?.result?.name }));
       clear();
     } else { // update
-      dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }));
+      dispatch(updatePost(currentId, { ...newPost, name: user?.result?.name }));
       clear();
     }
 
@@ -70,9 +79,23 @@ const Form = ({ currentId, setCurrentId }) => {
   
 
     
+  /*
+  const extractDomain = (url) => {
+    try {
+      const domain = new URL(url).hostname;
+      const parts = domain.split('.');
+      if (parts.length > 2) {
+        return parts[1].charAt(0).toUpperCase() + parts[1].slice(1); // Capitalize the second-level domain
+      } else {
+        return parts[0].charAt(0).toUpperCase() + parts[0].slice(1); // Capitalize the domain if it doesn't have subdomains
+      }
+    } catch (error) {
+      console.error('Invalid URL:', error);
+      return null;
+    }
+  }
+  */
 
-
-  
   
   // if user selects a new post, show it in form
   useEffect(() => {
@@ -95,7 +118,7 @@ const Form = ({ currentId, setCurrentId }) => {
     e.preventDefault();
 
     // call API here
-    //await makeAPICall()
+    await makeAPICall()
 
     console.log(postData);
   };
@@ -229,7 +252,8 @@ const Form = ({ currentId, setCurrentId }) => {
     }}
   >
     <div style={{ display: 'flex', alignItems: 'center', whiteSpace: 'nowrap', marginLeft: -10 }}>
-      <Add style={{ fontSize: 18, marginRight: 4 }} />
+      {currentId ? <EditIcon style={{ fontSize: 18, marginRight: 4 }} /> : <Add style={{ fontSize: 18, marginRight: 4 }} />}
+      
 
       <div>
         {currentId ? 'edit website' : 'add website'}
