@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextField, Button, Typography, Paper, Input, InputBase, FormControl, InputAdornment, FilledInput, InputLabel } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Add, Remove, Close }  from '@material-ui/icons';
+import { Add, Remove, Close, Visibility, VisibilityOff, IconButton }  from '@material-ui/icons';
 
 import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
@@ -12,7 +12,7 @@ import { createPost, updatePost } from '../../actions/posts';
 // primary: #F2733F (orange)
 // secondary: #3FBEF2 (azure)
 // tertiary: #B6E6FA (light blue)
-const inputColor = '#F2733F';
+const inputColor = '#B6E6FA';//'#F2733F';
 const buttonColor = '#B6E6FA';
 
 const Form = ({ currentId, setCurrentId }) => {
@@ -34,6 +34,10 @@ const Form = ({ currentId, setCurrentId }) => {
   const [pdf, setPDF] = useState();
 
   const [filename, setFilename] = useState('');
+
+  const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
 
   const makePost = async () => {
@@ -173,7 +177,7 @@ const Form = ({ currentId, setCurrentId }) => {
           variant="filled" 
           label="Password" 
           fullWidth 
-          type="password"
+          type={showPassword ? "text" : "password"}
           value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
           className={classes.input}
@@ -185,6 +189,19 @@ const Form = ({ currentId, setCurrentId }) => {
               borderBottomRightRadius: "7px",
               // #40375c
             },
+            endAdornment: (
+              <InputAdornment position="end">
+                <Button
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  style={{marginTop: 15, background: 'transparent'}}
+                  disableRipple
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </Button>
+              </InputAdornment>
+            )
           }}
           InputLabelProps={{
             style: {
