@@ -29,22 +29,23 @@ export default makeStyles((theme) => ({
   heading: {
     color: titleColor,//'rgba(0, 183, 255, 1)',
     textDecoration: 'none',
-    marginLeft: '30%',
+    marginLeft: '35%',
     whiteSpace: 'nowrap',
 
-    /*
+    
     // Add media queries for different screen widths
     [theme.breakpoints.down('xs')]: {
-      fontSize: '3.15rem', // Adjust this value as needed for smaller screens
+      fontSize: '1.75rem', // Adjust this value as needed for smaller screens
     },
     [theme.breakpoints.between('sm', 'md')]: {
-      fontSize: '4rem', // Adjust this value as needed for medium screens
+      fontSize: '1.75rem', // Adjust this value as needed for medium screens
+      marginLeft: '30%',
     },
     [theme.breakpoints.up('lg')]: {
-      fontSize: '4rem', // Adjust this value as needed for larger screens
+      fontSize: '1.75rem', // Adjust this value as needed for larger screens
     },
-    */
-   fontSize: '2.5rem',
+    
+   //fontSize: '2.5rem',
    fontWeight: 400
   },
   image: {
@@ -54,18 +55,29 @@ export default makeStyles((theme) => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'flex-end',
-    width: '300px',
-    marginRight: '5%'
+    marginLeft: 0,
+    //width: '300px',
+    //marginRight: '5%',
+    // Add media queries for different screen widths
+
+    [theme.breakpoints.between('sm', 'md')]: {
+      marginRight: '5%',
+    },
+    [theme.breakpoints.up('lg')]: {
+      marginRight: '5%',
+    },
   },
   profile: {
     display: 'flex',
-    justifyContent: 'space-between',
-    width: '400px',
+    justifyContent: 'flex-end',
+    //width: '400px',
   },
   userName: {
     display: 'flex',
     alignItems: 'center',
-    color: '#fff'
+    color: '#fff',
+    whiteSpace: 'nowrap',
+    marginRight: 30
   },
   brandContainer: {
     display: 'flex',
@@ -75,4 +87,8 @@ export default makeStyles((theme) => ({
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
   },
+  logout: {
+    //textTransform: 'none'
+    fontWeight: 600
+  }
 }));

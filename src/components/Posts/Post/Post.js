@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 
 import { deletePost } from '../../../actions/posts';
 import useStyles from './styles';
-import { ClassRounded } from '@material-ui/icons';
 
 const inputColor = '#B6E6FA';//'#F2733F';
 
@@ -23,8 +22,8 @@ const Post = ({ post, setCurrentId }) => {
     const user = JSON.parse(localStorage.getItem('profile'));
 
     const [showPassword, setShowPassword] = useState(false);
-    const handleClickShowPassword = () => setShowPassword(!showPassword);
-    const handleMouseDownPassword = () => setShowPassword(!showPassword);
+
+    const handleShowPassword = () => setShowPassword(!showPassword);
 
     const handleRemove = () => {
       dispatch(deletePost(post._id));
@@ -145,6 +144,15 @@ const Post = ({ post, setCurrentId }) => {
               },
               endAdornment: (
                 <InputAdornment position="end">
+                  <Button onClick={handleShowPassword} style={{marginTop: 15, background: 'transparent'}}
+                    disableRipple>
+                    {showPassword === false ? <Visibility /> : <VisibilityOff />}
+                  </Button>
+                </InputAdornment>
+              ),
+              /*
+              endAdornment: (
+                <InputAdornment position="end">
                   <Button
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
@@ -156,6 +164,7 @@ const Post = ({ post, setCurrentId }) => {
                   </Button>
                 </InputAdornment>
               )
+              */
             }}
             InputLabelProps={{
               style: {
@@ -182,11 +191,11 @@ const Post = ({ post, setCurrentId }) => {
         <CardActions className={classes.cardActions}>
 
             <Button className={classes.action} size="small" color="primary" onClick={() => setCurrentId(post._id)}>
-              <EditIcon className={classes.icon} fontSize="small" /> Edit
+              <EditIcon className={classes.icon} fontSize="small" /> edit
             </Button>
 
             <Button className={classes.action} size="small" color="primary" onClick={() => handleRemove()}>
-              <DeleteIcon className={classes.icon} fontSize="small" /> Delete
+              <DeleteIcon className={classes.icon} fontSize="small" /> delete
             </Button>
  
         </CardActions>

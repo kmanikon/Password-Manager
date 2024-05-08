@@ -30,15 +30,9 @@ const Form = ({ currentId, setCurrentId }) => {
 
   const dispatch = useDispatch();
 
-
-  const [pdf, setPDF] = useState();
-
-  const [filename, setFilename] = useState('');
-
   const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => setShowPassword(!showPassword);
-  const handleMouseDownPassword = () => setShowPassword(!showPassword);
 
+  const handleShowPassword = () => setShowPassword(!showPassword);
 
   const makePost = async () => {
 
@@ -68,8 +62,6 @@ const Form = ({ currentId, setCurrentId }) => {
   }
 
 
-
-  
   // makes call to textminer NLP API
   const makeAPICall = async (text) => {
 
@@ -77,25 +69,6 @@ const Form = ({ currentId, setCurrentId }) => {
   }
 
   
-
-    
-  /*
-  const extractDomain = (url) => {
-    try {
-      const domain = new URL(url).hostname;
-      const parts = domain.split('.');
-      if (parts.length > 2) {
-        return parts[1].charAt(0).toUpperCase() + parts[1].slice(1); // Capitalize the second-level domain
-      } else {
-        return parts[0].charAt(0).toUpperCase() + parts[0].slice(1); // Capitalize the domain if it doesn't have subdomains
-      }
-    } catch (error) {
-      console.error('Invalid URL:', error);
-      return null;
-    }
-  }
-  */
-
   
   // if user selects a new post, show it in form
   useEffect(() => {
@@ -106,7 +79,6 @@ const Form = ({ currentId, setCurrentId }) => {
   const clear = () => {
     setCurrentId(0); // might change back to null
     setPostData({ title: '', message: '', tags: '', selectedFile: '' });
-    setFilename('');
   }
 
 
@@ -214,6 +186,15 @@ const Form = ({ currentId, setCurrentId }) => {
             },
             endAdornment: (
               <InputAdornment position="end">
+                <Button onClick={handleShowPassword} style={{marginTop: 15, background: 'transparent'}}
+                  disableRipple>
+                  {showPassword === false ? <Visibility /> : <VisibilityOff />}
+                </Button>
+              </InputAdornment>
+            ),
+            /*
+            endAdornment: (
+              <InputAdornment position="end">
                 <Button
                   aria-label="toggle password visibility"
                   onClick={handleClickShowPassword}
@@ -225,6 +206,7 @@ const Form = ({ currentId, setCurrentId }) => {
                 </Button>
               </InputAdornment>
             )
+            */
           }}
           InputLabelProps={{
             style: {
