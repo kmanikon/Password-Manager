@@ -185,28 +185,13 @@ const Form = ({ currentId, setCurrentId }) => {
               // #40375c
             },
             endAdornment: (
-              <InputAdornment position="end">
-                <Button onClick={handleShowPassword} style={{marginTop: 15, background: 'transparent'}}
+              <InputAdornment position="end" >
+                <Button onClick={handleShowPassword} style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                   disableRipple>
                   {showPassword === false ? <Visibility /> : <VisibilityOff />}
                 </Button>
               </InputAdornment>
             ),
-            /*
-            endAdornment: (
-              <InputAdornment position="end">
-                <Button
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  style={{marginTop: 15, background: 'transparent'}}
-                  disableRipple
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </Button>
-              </InputAdornment>
-            )
-            */
           }}
           InputLabelProps={{
             style: {

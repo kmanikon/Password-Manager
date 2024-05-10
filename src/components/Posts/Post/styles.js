@@ -117,8 +117,7 @@ export default makeStyles({
   },
   icon: {
     paddingRight: 5
-  }
-  
+  },
 });
 
 

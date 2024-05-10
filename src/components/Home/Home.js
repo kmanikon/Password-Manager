@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Container, Grow, Grid } from '@material-ui/core';
+import { Container, Grow, Grid, useMediaQuery } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import useStyles from './styles';
@@ -27,17 +27,37 @@ const Home = () => {
     }, [currentId, dispatch]);
 
 
+    const isSmallScreen = useMediaQuery('(min-width: 600px)');
+
     return (
         <Grow in>
             <Container className={classes.root}>
+            {isSmallScreen ?
                 <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
+                    
+
                     <Grid item xs={12} sm={7}>
                         <Posts setCurrentId={setCurrentId} />
                     </Grid>
-                    <Grid item xs={12} sm={4}>
+                    <Grid item xs={12} sm={5}>
                     <Form currentId={currentId} setCurrentId={setCurrentId} />
                     </Grid>
+                    
                 </Grid>
+                :
+                <Grid container justifyContent="space-between" alignItems="stretch" spacing={3}>
+                    
+
+                    <Grid item xs={12} sm={5}>
+                    <Form currentId={currentId} setCurrentId={setCurrentId} />
+                    </Grid>
+                    <Grid item xs={12} sm={7}>
+                        <Posts setCurrentId={setCurrentId} />
+                    </Grid>
+                    
+                    
+                </Grid>
+            }
             </Container>
         </Grow>
   )

@@ -12,6 +12,8 @@ import { deletePost } from '../../../actions/posts';
 import useStyles from './styles';
 
 const inputColor = '#B6E6FA';//'#F2733F';
+const darkGrey = 'rgba(0, 0, 0, 0.54)';
+
 
 const Post = ({ post, setCurrentId }) => {
 
@@ -24,6 +26,20 @@ const Post = ({ post, setCurrentId }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const handleShowPassword = () => setShowPassword(!showPassword);
+
+    const [isOptionsHovered, setIsOptionsHovered] = useState(false);
+    
+    const handleMouseEnter = () => {
+      setIsOptionsHovered(true);
+    };
+    const handleMouseLeave = () => {
+      setIsOptionsHovered(false);
+    };
+
+    const optionsStyle = {
+      background: isOptionsHovered ? darkGrey: 'none',
+      color: 'grey',
+    };
 
     const handleRemove = () => {
       dispatch(deletePost(post._id));
@@ -76,7 +92,7 @@ const Post = ({ post, setCurrentId }) => {
         {(user?.result?.name === post?.name) && (
           <div className={classes.overlay2}>
 
-            <Button style={{ color: 'grey' }} size="small" onClick={() => setCurrentId(post._id)}>
+            <Button style={optionsStyle} size="small" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} onClick={() => setCurrentId(post._id)}>
               <MoreHorizIcon fontSize="medium" />
             </Button>
           </div>
@@ -101,13 +117,11 @@ const Post = ({ post, setCurrentId }) => {
             name="title" 
             variant="filled" 
             label="Username" 
-            //color="info"
             fullWidth 
             value={post.message}
             //onChange={(e) => setPostData({ ...postData, title: e.target.value })}
             className={classes.input}
             size="small"
-            //type="url"
             InputProps={{
               disableUnderline: true,
               style: {
@@ -117,10 +131,9 @@ const Post = ({ post, setCurrentId }) => {
             }}
             InputLabelProps={{
               style: {
-                color: inputColor//'#F2733F'//'#F2613F'
+                color: inputColor
               }
             }}
-            //focused
             disabled={true}
           />
 
@@ -144,49 +157,22 @@ const Post = ({ post, setCurrentId }) => {
               },
               endAdornment: (
                 <InputAdornment position="end">
-                  <Button onClick={handleShowPassword} style={{marginTop: 15, background: 'transparent'}}
+                  <Button onClick={handleShowPassword} style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple>
                     {showPassword === false ? <Visibility /> : <VisibilityOff />}
                   </Button>
                 </InputAdornment>
               ),
-              /*
-              endAdornment: (
-                <InputAdornment position="end">
-                  <Button
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                    style={{marginTop: 15, background: 'transparent'}}
-                    disableRipple
-                  >
-                    {showPassword ? <Visibility /> : <VisibilityOff />}
-                  </Button>
-                </InputAdornment>
-              )
-              */
             }}
             InputLabelProps={{
               style: {
-                color: inputColor//'#F2733F'//'#F2613F'
+                color: inputColor
               }
             }}
-            //focused
             disabled={true}
           />
           </div>
 
-
-        {/*
-        <CardContent>
-          <Typography variant="body2" color="textPrimary" component="h5" href={post.message} target="_blank" gutterBottom>{post.message}</Typography>
-        </CardContent>
-
-        <CardContent>
-          <Typography variant="body2" color="textPrimary" component="h5" href={post.tags} target="_blank" gutterBottom>{post.tags}</Typography>
-        </CardContent>
-        */}
-        
 
         <CardActions className={classes.cardActions}>
 

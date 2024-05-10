@@ -62,16 +62,15 @@ const Navbar = () => {
                     {isSmallScreen &&
                     <Typography className={classes.userName} variant="h6">
                         {
-                            'First Lastlolkoko'
-                        //user?.result.name
+                            user?.result.name
                         }
 
                     </Typography>
                     }
-                    <Button variant="contained" className={classes.logout} color="primary" onClick={logout}>Logout</Button>
+                    <Button variant="contained" className={classes.logout} color="primary" onClick={logout}>logout</Button>
                 </div>
                 ) : (
-                <Button component={Link} to="/auth" variant="contained" className={classes.logout} color="primary">Sign In</Button>
+                <Button component={Link} to="/auth" variant="contained" className={classes.logout} color="primary">sign in</Button>
                 )}
             </Toolbar>
         </AppBar>

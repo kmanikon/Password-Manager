@@ -9,25 +9,14 @@ const titleColor = '#B6E6FA';//'grey';
 
 export default makeStyles((theme) => ({
   appBar: {
-    //borderBottomRadius: 15,
     marginBottom: 30,
-    //margin: '30px 0',
-    //display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    //padding: '10px 50px',
     background: inputBackground,
-    //width: '100vw'
   },
-  /*
   heading: {
-    color: 'rgba(0,183,255, 1)',
-    textDecoration: 'none',
-  },
-  */
-  heading: {
-    color: titleColor,//'rgba(0, 183, 255, 1)',
+    color: titleColor,
     textDecoration: 'none',
     marginLeft: '35%',
     whiteSpace: 'nowrap',
@@ -36,6 +25,7 @@ export default makeStyles((theme) => ({
     // Add media queries for different screen widths
     [theme.breakpoints.down('xs')]: {
       fontSize: '1.75rem', // Adjust this value as needed for smaller screens
+      marginLeft: '10%',
     },
     [theme.breakpoints.between('sm', 'md')]: {
       fontSize: '1.75rem', // Adjust this value as needed for medium screens
@@ -56,8 +46,6 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'flex-end',
     marginLeft: 0,
-    //width: '300px',
-    //marginRight: '5%',
     // Add media queries for different screen widths
 
     [theme.breakpoints.between('sm', 'md')]: {
@@ -88,7 +76,10 @@ export default makeStyles((theme) => ({
     backgroundColor: deepPurple[500],
   },
   logout: {
-    //textTransform: 'none'
-    fontWeight: 600
+    textTransform: 'none',
+    fontWeight: 600,
+    fontSize: 16,
+    height: 35
+
   }
 }));

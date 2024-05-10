@@ -13,6 +13,7 @@ export default makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1.5),
+    borderRadius: '15px',
   },
   form: {
     display: 'flex',
