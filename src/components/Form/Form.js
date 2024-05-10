@@ -37,8 +37,9 @@ const Form = ({ currentId, setCurrentId }) => {
   const makePost = async () => {
 
 
-    if (postData.message == ''){
-      postData.message = 'Sorry! There was an error parsing text.'
+    if (postData.message == '' || postData.title == '' || postData.tags == ''){
+      //postData.message = 'Sorry! There was an error parsing text.'
+      return;
     }
 
     let newPost = postData;
