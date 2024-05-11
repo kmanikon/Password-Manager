@@ -4,6 +4,7 @@ const inputBorderWidth = '1px';
 const inputBorderColor = 'rgba(255, 255, 255, 0.4)';//'grey';
 
 const inputBackground = 'rgba(0, 0, 0, 0.54)';//'black';
+const inputBackgroundHighlight = 'rgba(0, 0, 0, 0.42)';//'black';
 
 export default makeStyles((theme) => ({
   root: {
@@ -32,6 +33,8 @@ export default makeStyles((theme) => ({
     height: 35
   },
   input: {
+    transition: 'background 0.1s ease-out, background-color 0.1s ease-out',
+    borderRadius: '7px',
     "& .MuiInputBase-root": {
       color: '#fff',
       backgroundColor: inputBackground,
@@ -56,6 +59,10 @@ export default makeStyles((theme) => ({
         borderColor: '#6F7E8C',
       },
     },
+    '&:hover': {
+      background: inputBackgroundHighlight,
+      transition: 'background 0.1s ease-out, border 0.1s ease-out'
+    }
   },
   inputContainer: {
     borderTop: `${inputBorderWidth} solid ${inputBorderColor}`, 
