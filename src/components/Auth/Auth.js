@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, Paper, Grid, Typography, Container, CircularProgress, Box } from '@material-ui/core';
+import { Avatar, Button, Paper, Grid, Typography, Container, CircularProgress, Box, TextField } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -11,6 +11,8 @@ import Input from './Input';
 // used to clear login
 const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: '' };
 
+
+const inputColor = '#B6E6FA';//'#F2733F';
 
 // sign up / sign in front end
 
@@ -92,18 +94,116 @@ const Auth = () => {
           <LockOutlinedIcon/>
         </Avatar>
 
-        <Typography variant="h5">{ isSignup ? 'Sign Up' : 'Sign In' }</Typography>
+        <Typography className={classes.formTitle} variant="h5">{ isSignup ? 'Sign Up' : 'Login' }</Typography>
         <form className={classes.form} onSubmit={handleSubmit}>
         <Grid container spacing={2}>
+          {/*
           { isSignup && (
             <>
               <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
               <Input name="lastName" label="Last Name" handleChange={handleChange} half />
             </>
           )}
-            <Input name="email" label="Email Address" handleChange={handleChange} type="email" />
+          */}
+            
+            {/*
+            <Input
+              name="email" 
+              label="Email Address" 
+              handleChange={handleChange}
+              type="email" 
+              className={classes.input} 
+            />
             <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? 'text' : 'password'} handleShowPassword={handleShowPassword} />
-          { isSignup && <Input name="confirmPassword" label="Repeat Password" handleChange={handleChange} type="password" /> }
+            */}
+            <TextField 
+                name="email" 
+                label="Email Address" 
+                handleChange={handleChange}
+                type="email" 
+                className={classes.input} 
+                //size="small"
+                autoComplete='off'
+                variant="outlined"
+                fullWidth
+                InputProps={{
+                  disableUnderline: true,
+                  border: '1px sold white',
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: '#fff',//'#F2733F'//'#F2613F'
+                    border: '1px sold white',
+                    //background: 'black'
+                  }
+                }}
+                
+                //focused
+                autoFocus
+            />
+
+        
+
+            <TextField 
+                name="password" 
+                label="Password" 
+                handleChange={handleChange} 
+                type={showPassword ? 'text' : 'password'} 
+                handleShowPassword={handleShowPassword} 
+
+                className={classes.input} 
+                //size="small"
+                variant="outlined"
+                fullWidth
+                InputProps={{
+                  disableUnderline: true,
+                  border: '1px sold white'
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: '#fff',//'#F2733F'//'#F2613F'
+                    border: '1px sold white',
+                    //background: 'black'
+                  }
+                }}
+                //focused
+            />
+            
+                
+
+            
+          {/*             
+            <Input 
+              name="confirmPassword"
+              label="Repeat Password" 
+              handleChange={handleChange} 
+              type="password" 
+            /> 
+          */}
+          { isSignup && 
+            <TextField 
+                name="confirmPassword"
+                label="Repeat Password" 
+                handleChange={handleChange} 
+                type="password" 
+                className={classes.input} 
+                //size="small"
+                autoComplete='off'
+                variant="outlined"
+                fullWidth
+                InputProps={{
+                  disableUnderline: true,
+                  border: '1px sold white',
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: '#fff',//'#F2733F'//'#F2613F'
+                    border: '1px sold white',
+                    //background: 'black'
+                  }
+                }}
+            />
+          }
         </Grid>
         
         <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
@@ -126,22 +226,22 @@ const Auth = () => {
 
 
           { badLogin && !isSignup && (
-              <Typography variant="h6" style={{marginBottom: '10px', textAlign: 'center'}}>That user was not found</Typography>
+              <Typography className={classes.auxText} variant="h6" style={{marginBottom: '10px', textAlign: 'center'}}>That user was not found</Typography>
             )}
             
             { badSignUp && isSignup && (
-              <Typography variant="h6" style={{marginBottom: '10px', textAlign: 'center'}}>A user exists with that email</Typography>
+              <Typography className={classes.auxText} variant="h6" style={{marginBottom: '10px', textAlign: 'center'}}>A user exists with that email</Typography>
             )}
 
 
             <Box textAlign='center'>
 
               { isSignup ?
-                <Button onClick={switchMode} >
+                <Button className={classes.auxText} onClick={switchMode} >
                   { 'Already have an account? Sign in'}
                 </Button>
               :
-                <Button onClick={switchMode} >
+                <Button className={classes.auxText} onClick={switchMode} >
                   { "Don't have an account? Sign Up" }
                 </Button>
               }
@@ -155,7 +255,7 @@ const Auth = () => {
             */}
 
             <Box textAlign='center'>
-              <Button onClick={handleDemoSignIn}>
+              <Button className={classes.auxText} onClick={handleDemoSignIn}>
                 { !isSignup ? 'Sign In As a Demo User' : null}
               </Button>
             </Box>
