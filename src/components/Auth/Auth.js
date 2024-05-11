@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Avatar, Button, Paper, Grid, Typography, Container, CircularProgress, Box, TextField } from '@material-ui/core';
+import { Avatar, Button, Paper, Grid, Typography, Container, CircularProgress, Box, TextField, InputAdornment } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import {  Visibility, VisibilityOff }  from '@material-ui/icons';
 
 import { signin, signup } from '../../actions/auth';
 import useStyles from './styles';
@@ -30,9 +31,11 @@ const Auth = () => {
 
   // state for password visibility
   const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   // toggle password visibility
   const handleShowPassword = () => setShowPassword(!showPassword);
+  const handleShowConfirmPassword = () => setShowConfirmPassword(!showConfirmPassword);
 
   // true = bad login, false = user logged in / signed up
   const [badLogin, setbadLogin] = useState(false);
@@ -45,6 +48,9 @@ const Auth = () => {
     e.preventDefault(); 
     //console.log('submit')
     //console.log(formData);
+    if (formData.email === '' || formData.password === ''){
+      return;
+    }
 
     setIsLoading(true);
     // call auth actions
@@ -133,7 +139,8 @@ const Auth = () => {
                 InputLabelProps={{
                   style: {
                     color: '#fff',//'#F2733F'//'#F2613F'
-                    border: '1px sold white',
+                    //border: '10px sold transparent',
+                    fontWeight: 600
                     //background: 'black'
                   }
                 }}
@@ -157,12 +164,21 @@ const Auth = () => {
                 fullWidth
                 InputProps={{
                   disableUnderline: true,
-                  border: '1px sold white'
+                  border: '1px sold white',
+                  endAdornment: (
+                    <InputAdornment position="end" >
+                      <Button onClick={handleShowPassword} style={{ marginRight: -10, background: 'transparent', color: 'white'}}
+                        disableRipple>
+                        {showPassword === false ? <Visibility /> : <VisibilityOff />}
+                      </Button>
+                    </InputAdornment>
+                  ),
                 }}
                 InputLabelProps={{
                   style: {
                     color: '#fff',//'#F2733F'//'#F2613F'
                     border: '1px sold white',
+                    fontWeight: 600
                     //background: 'black'
                   }
                 }}
@@ -185,7 +201,7 @@ const Auth = () => {
                 name="confirmPassword"
                 label="Repeat Password" 
                 handleChange={handleChange} 
-                type="password" 
+                type={showConfirmPassword ? 'text' : 'password'} 
                 className={classes.input} 
                 //size="small"
                 autoComplete='off'
@@ -194,11 +210,20 @@ const Auth = () => {
                 InputProps={{
                   disableUnderline: true,
                   border: '1px sold white',
+                  endAdornment: (
+                    <InputAdornment position="end" >
+                      <Button onClick={handleShowConfirmPassword} style={{ marginRight: -10, background: 'transparent', color: 'white'}}
+                        disableRipple>
+                        {showConfirmPassword === false ? <Visibility /> : <VisibilityOff />}
+                      </Button>
+                    </InputAdornment>
+                  ),
                 }}
                 InputLabelProps={{
                   style: {
                     color: '#fff',//'#F2733F'//'#F2613F'
-                    border: '1px sold white',
+                    //border: '1px sold white',
+                    fontWeight: 600
                     //background: 'black'
                   }
                 }}

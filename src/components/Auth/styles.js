@@ -8,7 +8,7 @@ const inputBorderWidth = '1px';
 const greyBackground = 'rgba(255, 255, 255, 0.08)';
 const inputBackground = 'rgba(0, 0, 0, 0.54)';
 const inputBorderHighlight = 'rgba(255, 255, 255, 0.72)';
-const auxTextColor = 'rgba(255, 255, 255, 0.92)';
+const auxTextColor = 'rgba(255, 255, 255, 0.86)';
 
 export default makeStyles((theme) => ({
   paper: {
@@ -46,12 +46,11 @@ export default makeStyles((theme) => ({
   },
   auxText: {
     color: auxTextColor,
-    '& .MuiButton-root': {
-      backgroundColor: 'rgba(0, 0, 0, 0.12)',//textSecondary,//theme.palette.text.secondary,//'#344', // Change button background color to dark mode palette
-      '&:hover': {
-          backgroundColor: 'rgba(0, 0, 0, 1)',//theme.palette.action.hover,//'rgba(255,255,255,0.5)', // Change button background color on hover
-      },
-  },
+    fontWeight: 600,
+    '&:hover': {
+      color: 'rgba(255, 255, 255, 1)',//theme.palette.action.hover,//'rgba(255,255,255,0.5)', // Change button background color on hover
+    },
+    textTransform: 'none'
   },
   input: {
     margin: theme.spacing(1),
@@ -74,14 +73,17 @@ export default makeStyles((theme) => ({
         //borderColor: '#E0E3E7',
         //backgroundColor: inputBackground,
         border: `${inputBorderWidth} solid ${inputBorderColor}`,
+        transition: 'border 1s ease-out, background-color 1s ease-out'
       },
       '&:hover fieldset': {
         //borderColor: '#B2BAC2',
         border: `1.5px solid ${inputBorderHighlight}`,
+        transition: 'border 0.1s ease-out, background-color 1s ease-out'
       },
       '&.Mui-focused fieldset': {
         //borderColor: '#6F7E8C',
         border: `1.5px solid ${inputBorderHighlight}`,
+        transition: 'border 0.1s ease-out, background-color 1s ease-out'
       },
     },
   },
