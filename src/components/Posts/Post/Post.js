@@ -1,9 +1,9 @@
 import React from 'react';
-import { useState } from 'react';
-import { Card, CardActions, Button, Typography, TextField, InputAdornment } from '@material-ui/core/';
+import { useState, Fragment } from 'react';
+import { Card, CardActions, Button, Typography, TextField, InputAdornment, Tooltip } from '@material-ui/core/';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { Visibility, VisibilityOff }  from '@material-ui/icons';
+import { Visibility, VisibilityOff, Assignment }  from '@material-ui/icons';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useDispatch } from 'react-redux';
@@ -29,6 +29,22 @@ const Post = ({ post, setCurrentId }) => {
 
     const [isOptionsHovered, setIsOptionsHovered] = useState(false);
     
+    const [openPass, setOpenPass] = React.useState(false);
+
+    const handleTooltipClosePass = () => {
+      setOpenPass(false);
+    };
+
+    const handleTooltipOpenPass = () => {
+      handleCopyClipboard(post.tags)
+      setOpenPass(true);
+    
+      // Set open to false after a delay (e.g., 2000 milliseconds = 2 seconds)
+        setTimeout(() => {
+          setOpenPass(false);
+      }, 1500); // Adjust the delay time as needed
+    };
+
     const handleMouseEnter = () => {
       setIsOptionsHovered(true);
     };
@@ -83,6 +99,35 @@ const Post = ({ post, setCurrentId }) => {
       }
       
       return url;
+    }
+
+    const handleCopyClipboard = (value) => {
+      //alert(value);
+      
+      // Creating a temporary textarea element to copy the value
+      const textarea = document.createElement('textarea');
+      textarea.value = value;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+    }
+
+    const PasswordLabel = () => {
+      return (
+        <Fragment>
+                Password
+            
+                  <Button 
+                    onClick={() => alert('hi')}
+                    style={{marginTop: 0, background: 'transparent'}}
+                    disableRipple
+                  >
+                    <Assignment/>
+                    
+                  </Button>
+              </Fragment>
+      );
     }
 
     return (
@@ -140,8 +185,7 @@ const Post = ({ post, setCurrentId }) => {
           <TextField 
             name="title" 
             variant="filled" 
-            label="Password" 
-            //color="info"
+            label="Password"
             fullWidth 
             value={post.tags}
             //onChange={(e) => setPostData({ ...postData, title: e.target.value })}
@@ -157,10 +201,39 @@ const Post = ({ post, setCurrentId }) => {
               },
               endAdornment: (
                 <InputAdornment position="end">
+                  
+                  
+                  <Tooltip
+                    PopperProps={{
+                      disablePortal: true,
+                    }}
+                    onClose={handleTooltipClosePass}
+                    open={openPass}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    //title="Copied to Clipboard!"
+                    enterDelay={200} leaveDelay={1000}
+                    arrow
+                    title={<h1 style={{ fontSize: 14, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
+                  >
+                  <Button 
+                    onClick={handleTooltipOpenPass}
+                    //onClick={() => handleCopyClipboard(post.tags)} 
+                    style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
+                    disableRipple
+                  >
+                    <Assignment/>
+                  </Button>
+                  </Tooltip>
+                  
+                  
+                  
                   <Button onClick={handleShowPassword} style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple>
                     {showPassword === false ? <Visibility /> : <VisibilityOff />}
                   </Button>
+                  
                 </InputAdornment>
               ),
             }}
