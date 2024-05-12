@@ -4,6 +4,7 @@ import { Card, CardActions, Button, Typography, TextField, InputAdornment, Toolt
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import { Visibility, VisibilityOff, Assignment }  from '@material-ui/icons';
+import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ import useStyles from './styles';
 
 const inputColor = '#B6E6FA';//'#F2733F';
 const darkGrey = 'rgba(0, 0, 0, 0.54)';
+const lightGrey = 'rgba(255, 255, 255, 0.76)';
 
 
 const Post = ({ post, setCurrentId }) => {
@@ -128,23 +130,6 @@ const Post = ({ post, setCurrentId }) => {
       document.body.removeChild(textarea);
     }
 
-    const PasswordLabel = () => {
-      return (
-        <Fragment>
-                Password
-            
-                  <Button 
-                    onClick={() => alert('hi')}
-                    style={{marginTop: 0, background: 'transparent'}}
-                    disableRipple
-                  >
-                    <Assignment/>
-                    
-                  </Button>
-              </Fragment>
-      );
-    }
-
     return (
 
       <Card className={classes.card} >
@@ -211,15 +196,18 @@ const Post = ({ post, setCurrentId }) => {
                     //title="Copied to Clipboard!"
                     enterDelay={200} leaveDelay={1000}
                     arrow
-                    title={<h1 style={{ fontSize: 14, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
+                    title={<h1 style={{ fontSize: 12, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
                   >
                   <Button 
                     onClick={handleTooltipOpenUser}
-                    //onClick={() => handleCopyClipboard(post.tags)} 
                     style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple
                   >
-                    <Assignment/>
+                    <ContentCopyIcon 
+                      style={{
+                        color: lightGrey, 
+                      }}
+                    />
                   </Button>
                   </Tooltip>
                   
@@ -248,7 +236,6 @@ const Post = ({ post, setCurrentId }) => {
             label="Password"
             fullWidth 
             value={post.tags}
-            //onChange={(e) => setPostData({ ...postData, title: e.target.value })}
             className={classes.input}
             size="small"
             type={showPassword ? "text" : "password"}
@@ -283,15 +270,14 @@ const Post = ({ post, setCurrentId }) => {
                     //title="Copied to Clipboard!"
                     enterDelay={200} leaveDelay={1000}
                     arrow
-                    title={<h1 style={{ fontSize: 14, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
+                    title={<h1 style={{ fontSize: 12, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
                   >
                   <Button 
                     onClick={handleTooltipOpenPass}
-                    //onClick={() => handleCopyClipboard(post.tags)} 
                     style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple
                   >
-                    <Assignment/>
+                    <ContentCopyIcon style={{color: lightGrey}}/>
                   </Button>
                   </Tooltip>
                   
