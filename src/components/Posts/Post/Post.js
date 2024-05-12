@@ -3,7 +3,7 @@ import { useState, Fragment } from 'react';
 import { Card, CardActions, Button, Typography, TextField, InputAdornment, Tooltip } from '@material-ui/core/';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { Visibility, VisibilityOff, Assignment }  from '@material-ui/icons';
+//import { Visibility, VisibilityOff, Assignment }  from '@material-ui/icons';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
@@ -27,18 +27,22 @@ const Post = ({ post, setCurrentId }) => {
 
     const [showPassword, setShowPassword] = useState(false);
 
-    const handleShowPassword = () => setShowPassword(!showPassword);
+    //const handleShowPassword = () => setShowPassword(!showPassword);
 
     const [isOptionsHovered, setIsOptionsHovered] = useState(false);
     
     const [openUser, setOpenUser] = useState(false);
     const [openPass, setOpenPass] = useState(false);
 
+    const [copyUser, setCopyUser] = useState(false);
+    const [copyPass, setCopyPass] = useState(false);
+
     const handleTooltipClosePass = () => {
       setOpenPass(false);
     };
 
     const handleTooltipOpenPass = () => {
+      setCopyPass(false);
       handleCopyClipboard(post.tags)
       setOpenPass(true);
     
@@ -53,6 +57,7 @@ const Post = ({ post, setCurrentId }) => {
     };
 
     const handleTooltipOpenUser = () => {
+      setCopyUser(false);
       handleCopyClipboard(post.message)
       setOpenUser(true);
     
@@ -61,6 +66,7 @@ const Post = ({ post, setCurrentId }) => {
           setOpenUser(false);
       }, 1500); // Adjust the delay time as needed
     };
+
 
     const handleMouseEnter = () => {
       setIsOptionsHovered(true);
@@ -175,7 +181,8 @@ const Post = ({ post, setCurrentId }) => {
               endAdornment: (
                 <InputAdornment position="end" >
                   
-                  
+
+
                   <Tooltip
                     PopperProps={{
                       //disablePortal: true,
@@ -198,8 +205,41 @@ const Post = ({ post, setCurrentId }) => {
                     arrow
                     title={<h1 style={{ fontSize: 12, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
                   >
+                  
+                  
+                  <Tooltip
+                    PopperProps={{
+                      //disablePortal: true,
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [-50, 50],
+                          },
+                        },
+                      ],
+                    }}
+                    onClose={handleTooltipCloseUser}
+                    open={copyUser}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    //title="Copied to Clipboard!"
+                    enterDelay={200} leaveDelay={1000}
+                    arrow
+                    title={<h1 style={{ fontSize: 12, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copy</h1>}
+                  >
                   <Button 
                     onClick={handleTooltipOpenUser}
+                    
+                    onMouseEnter={() => { 
+                      if (!openUser) { 
+                          //handleTooltipOpenUser(); 
+                          setCopyUser(true);
+                      } 
+                    }}
+                    onMouseLeave={() => setCopyUser(false)}
+                    
                     style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple
                   >
@@ -209,6 +249,7 @@ const Post = ({ post, setCurrentId }) => {
                       }}
                     />
                   </Button>
+                  </Tooltip>
                   </Tooltip>
                   
                   
@@ -249,6 +290,31 @@ const Post = ({ post, setCurrentId }) => {
               endAdornment: (
                 <InputAdornment position="end" >
                   
+
+                  
+                  <Tooltip
+                    PopperProps={{
+                      //disablePortal: true,
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [-50, 50],
+                          },
+                        },
+                      ],
+                    }}
+                    onClose={handleTooltipClosePass}
+                    open={copyPass}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    //title="Copied to Clipboard!"
+                    enterDelay={200} leaveDelay={1000}
+                    arrow
+                    title={<h1 style={{ fontSize: 12, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copy</h1>}
+                  >
+
                   
                   <Tooltip
                     PopperProps={{
@@ -274,11 +340,19 @@ const Post = ({ post, setCurrentId }) => {
                   >
                   <Button 
                     onClick={handleTooltipOpenPass}
+                    onMouseEnter={() => { 
+                      if (!openPass) { 
+                          setCopyPass(true);
+                      } 
+                    }}
+                    onMouseLeave={() => setCopyPass(false)}
+
                     style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple
                   >
                     <ContentCopyIcon style={{color: lightGrey}}/>
                   </Button>
+                  </Tooltip>
                   </Tooltip>
                   
                   
