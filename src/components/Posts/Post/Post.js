@@ -29,7 +29,8 @@ const Post = ({ post, setCurrentId }) => {
 
     const [isOptionsHovered, setIsOptionsHovered] = useState(false);
     
-    const [openPass, setOpenPass] = React.useState(false);
+    const [openUser, setOpenUser] = useState(false);
+    const [openPass, setOpenPass] = useState(false);
 
     const handleTooltipClosePass = () => {
       setOpenPass(false);
@@ -42,6 +43,20 @@ const Post = ({ post, setCurrentId }) => {
       // Set open to false after a delay (e.g., 2000 milliseconds = 2 seconds)
         setTimeout(() => {
           setOpenPass(false);
+      }, 1500); // Adjust the delay time as needed
+    };
+
+    const handleTooltipCloseUser = () => {
+      setOpenUser(false);
+    };
+
+    const handleTooltipOpenUser = () => {
+      handleCopyClipboard(post.message)
+      setOpenUser(true);
+    
+      // Set open to false after a delay (e.g., 2000 milliseconds = 2 seconds)
+        setTimeout(() => {
+          setOpenUser(false);
       }, 1500); // Adjust the delay time as needed
     };
 
@@ -164,7 +179,6 @@ const Post = ({ post, setCurrentId }) => {
             label="Username" 
             fullWidth 
             value={post.message}
-            //onChange={(e) => setPostData({ ...postData, title: e.target.value })}
             className={classes.input}
             size="small"
             InputProps={{
@@ -173,6 +187,52 @@ const Post = ({ post, setCurrentId }) => {
                 borderTopLeftRadius: "7px",
                 borderTopRightRadius: "7px",
               },
+              endAdornment: (
+                <InputAdornment position="end" >
+                  
+                  
+                  <Tooltip
+                    PopperProps={{
+                      //disablePortal: true,
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [-50, 50],
+                          },
+                        },
+                      ],
+                    }}
+                    onClose={handleTooltipCloseUser}
+                    open={openUser}
+                    disableFocusListener
+                    disableHoverListener
+                    disableTouchListener
+                    //title="Copied to Clipboard!"
+                    enterDelay={200} leaveDelay={1000}
+                    arrow
+                    title={<h1 style={{ fontSize: 14, fontWeight: 100, margin: 3, borderRadius: 20 }}>Copied to Clipboard!</h1>}
+                  >
+                  <Button 
+                    onClick={handleTooltipOpenUser}
+                    //onClick={() => handleCopyClipboard(post.tags)} 
+                    style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
+                    disableRipple
+                  >
+                    <Assignment/>
+                  </Button>
+                  </Tooltip>
+                  
+                  
+                  {/*
+                  <Button onClick={handleShowPassword} style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
+                    disableRipple>
+                    {showPassword === false ? <Visibility /> : <VisibilityOff />}
+                  </Button>
+                  */}
+                  
+                </InputAdornment>
+              ),
             }}
             InputLabelProps={{
               style: {
@@ -200,12 +260,20 @@ const Post = ({ post, setCurrentId }) => {
                 border: 'none'
               },
               endAdornment: (
-                <InputAdornment position="end">
+                <InputAdornment position="end" >
                   
                   
                   <Tooltip
                     PopperProps={{
-                      disablePortal: true,
+                      //disablePortal: true,
+                      modifiers: [
+                        {
+                          name: "offset",
+                          options: {
+                            offset: [-50, 50],
+                          },
+                        },
+                      ],
                     }}
                     onClose={handleTooltipClosePass}
                     open={openPass}
@@ -228,11 +296,12 @@ const Post = ({ post, setCurrentId }) => {
                   </Tooltip>
                   
                   
-                  
+                  {/*
                   <Button onClick={handleShowPassword} style={{marginTop: 15, marginRight: -20, background: 'transparent'}}
                     disableRipple>
                     {showPassword === false ? <Visibility /> : <VisibilityOff />}
                   </Button>
+                  */}
                   
                 </InputAdornment>
               ),
