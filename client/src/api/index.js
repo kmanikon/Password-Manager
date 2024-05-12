@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // zeet url
 // resuing backend from pdf sum project
-const API = axios.create({ baseURL: process.env.DOCKER_URL });
+const API = axios.create({ baseURL: process.env.REACT_APP_DOCKER_URL });
 
 // authorization to apply middleware
 // send token to backend middleware
