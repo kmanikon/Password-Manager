@@ -18,9 +18,8 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
 
-//CONNECTION_URL = 'mongodb://mongodb:e43FQweegr6RS6rP@mongodb-xin2-rx02-production/memories-mongo';
 
-const CONNECTION_URL = 'mongodb+srv://kmanikon:Zamn123@cluster0.gbejc2u.mongodb.net/?retryWrites=true&w=majority';
+const CONNECTION_URL = `mongodb+srv://${process.env.NODE_APP_DB_URL}?retryWrites=true&w=majority`
 
 const PORT = process.env.PORT || 4000;
 
