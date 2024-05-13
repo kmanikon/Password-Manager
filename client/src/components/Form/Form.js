@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import { Add, Remove, Close, Visibility, VisibilityOff, IconButton }  from '@material-ui/icons';
 
+import * as Crypto from 'crypto-js';
+
 import useStyles from './styles';
 import { createPost, updatePost } from '../../actions/posts';
 
@@ -42,8 +44,15 @@ const Form = ({ currentId, setCurrentId }) => {
       return;
     }
 
+    const key = 'SECRET';
+
     let newPost = postData;
 
+    
+    newPost.title = Crypto.AES.encrypt(postData.title, key).toString();
+    newPost.message = Crypto.AES.encrypt(postData.message, key).toString();
+    newPost.tags = Crypto.AES.encrypt(postData.tags, key).toString();
+    
     /*
     const domain = extractDomain(newPost.title);
 
