@@ -1,6 +1,8 @@
 import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionTypes';
 import * as api from '../api/index.js';
+import * as Crypto from 'crypto-js';
 
+const key = 'SECRET';
 
 // handle fetch posts from mongoDB
 export const getPosts = () => async (dispatch) => {
@@ -9,8 +11,29 @@ export const getPosts = () => async (dispatch) => {
     // get posts from DB
     const { data } = await api.fetchPosts();
 
+    const decryptedData = data.map(item => {
+      // Decrypt title
+      const decryptedTitle = Crypto.AES.decrypt(item.title, key).toString(Crypto.enc.Utf8);
+      // Decrypt message
+      const decryptedMessage = Crypto.AES.decrypt(item.message, key).toString(Crypto.enc.Utf8);
+
+      const decryptedTags = Crypto.AES.decrypt(item.tags[0], key).toString(Crypto.enc.Utf8);
+
+      // Return decrypted item
+      return {
+        ...item,
+        title: decryptedTitle,
+        message: decryptedMessage,
+        tags: decryptedTags
+      };
+    });
+    
+
     // update posts page
-    dispatch({ type: FETCH_ALL, payload: data });
+    dispatch({ 
+      type: FETCH_ALL, 
+      payload: decryptedData//data 
+    });
 
   } catch (error) {
     console.log(error);
@@ -23,8 +46,18 @@ export const createPost = (post) => async (dispatch) => {
     // send post data with post request
     const { data } = await api.createPost(post);
 
+    let newPost = data;
+    
+    newPost.title = Crypto.AES.decrypt(data.title, key).toString(Crypto.enc.Utf8);
+    newPost.message = Crypto.AES.decrypt(data.message, key).toString(Crypto.enc.Utf8);
+    newPost.tags = Crypto.AES.decrypt(data.tags[0], key).toString(Crypto.enc.Utf8);
+
+
     // update the posts page
-    dispatch({ type: CREATE, payload: data });
+    dispatch({ 
+      type: CREATE,
+      payload: newPost 
+    });
 
   } catch (error) {
     console.log(error);
