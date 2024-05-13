@@ -44,7 +44,7 @@ const Form = ({ currentId, setCurrentId }) => {
       return;
     }
 
-    const key = 'SECRET';
+    const key = process.env.REACT_APP_CLIENT_SECRET;
 
     let newPost = postData;
 

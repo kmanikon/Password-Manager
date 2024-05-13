@@ -2,7 +2,7 @@ import { FETCH_ALL, CREATE, UPDATE, DELETE, LIKE } from '../constants/actionType
 import * as api from '../api/index.js';
 import * as Crypto from 'crypto-js';
 
-const key = 'SECRET';
+const key = process.env.REACT_APP_CLIENT_SECRET;
 
 // handle fetch posts from mongoDB
 export const getPosts = () => async (dispatch) => {
