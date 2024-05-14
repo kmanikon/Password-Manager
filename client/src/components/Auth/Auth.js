@@ -146,7 +146,7 @@ const Auth = () => {
                 }}
                 
                 //focused
-                autoFocus
+                //autoFocus
             />
 
         
